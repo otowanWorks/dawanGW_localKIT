@@ -1,3 +1,19 @@
+// AI返答コピー
+function copyAiResponse() {
+    const text = document.getElementById('aiResponseUtterance')?.innerText || '';
+    if (!text) return;
+    navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copyButton');
+        if (!btn) return;
+        btn.textContent = '✅';
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.textContent = '📋';
+            btn.classList.remove('copied');
+        }, 2000);
+    });
+}
+
 // グローバル変数
 var isThinking = false;
 var LIVE_OWNER_ID = createUuid();
@@ -242,7 +258,6 @@ async function handleComment(comment, username) {
 
     sendButton.disabled = true;
     sendButton.innerHTML = '<div class="loading"></div>';
-    voiceButton.disabled = true;
     utteranceInput.disabled = true;
     userCommentElement.textContent = username + ": " + comment;
 
@@ -256,7 +271,6 @@ async function handleComment(comment, username) {
         isThinking = false;
         sendButton.disabled = false;
         sendButton.textContent = '送信';
-        voiceButton.disabled = false;
         utteranceInput.disabled = false;
     }
 
